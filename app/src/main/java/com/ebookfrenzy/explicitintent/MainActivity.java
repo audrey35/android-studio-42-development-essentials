@@ -10,6 +10,7 @@ import com.ebookfrenzy.explicitintent.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int request_code = 5;
     private ActivityMainBinding binding;
 
     @Override
@@ -32,6 +33,14 @@ public class MainActivity extends AppCompatActivity {
         i.putExtra("qString", myString);
 
         // intent is started as the intent object is passed (the one containing extracted text)
-        startActivity(i);
+        startActivityForResult(i, request_code);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if ((requestCode == request_code) && (resultCode == RESULT_OK)) {
+            String returnString = data.getExtras().getString("returnData");
+            binding.textView1.setText(returnString);
+        }
     }
 }

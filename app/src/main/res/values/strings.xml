@@ -2,4 +2,5 @@
     <string name="app_name">Explicit Intent</string>
     <string name="send_text">Send Text</string>
     <string name="return_text">Return Text</string>
+    <string name="textview">TextView</string>
 </resources>

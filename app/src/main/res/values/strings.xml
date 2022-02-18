@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Voice Typer</string>
+    <string name="geeks">GeeksforGeeks</string>
+    <string name="language">Choose your Language</string>
 </resources>

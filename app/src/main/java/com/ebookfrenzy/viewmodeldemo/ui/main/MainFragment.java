@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import com.ebookfrenzy.viewmodeldemo.R;
 import com.ebookfrenzy.viewmodeldemo.databinding.MainFragmentBinding;
 
+import java.util.Locale;
+
 public class MainFragment extends Fragment {
 
     private MainViewModel mViewModel;
@@ -44,14 +46,33 @@ public class MainFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        // get reference to ViewModel
         mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
-        // the onClickListener for the convertButton
+        // set resultText to converted value from ViewModel
+        binding.resultText.setText(String.format(Locale.ENGLISH,"%.2f",
+                mViewModel.getResult()));
+
+        // called when user clicks convertButton
         binding.convertButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v) {
-                // code written here will get executed when user clicks convertButton
+
+                // check dollarText isn't empty
+                if (!binding.dollarText.getText().toString().equals("")) {
+                    // set ViewModel's dollarText amount with current value in dollarText view
+                    mViewModel.setAmount(String.format(Locale.ENGLISH,"%s",
+                            binding.dollarText.getText()));
+
+                    // set resultText view with converted value returned by ViewModel's getResult method
+                    binding.resultText.setText(String.format(Locale.ENGLISH,"%.2f",
+                            mViewModel.getResult()));
+                } else {
+                    // if dollarText is empty, display No value on resultText view
+                    binding.resultText.setText("No Value");
+                }
             }
         });
     }

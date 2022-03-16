@@ -13,10 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ebookfrenzy.viewmodeldemo.R;
+import com.ebookfrenzy.viewmodeldemo.databinding.MainFragmentBinding;
 
 public class MainFragment extends Fragment {
 
     private MainViewModel mViewModel;
+    private MainFragmentBinding binding;
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -24,16 +26,34 @@ public class MainFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.main_fragment, container, false);
+
+        // setting the MainFragment to use view binding
+        binding = MainFragmentBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        // TODO: Use the ViewModel
+
+        // the onClickListener for the convertButton
+        binding.convertButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                // code written here will get executed when user clicks convertButton
+            }
+        });
     }
 
 }

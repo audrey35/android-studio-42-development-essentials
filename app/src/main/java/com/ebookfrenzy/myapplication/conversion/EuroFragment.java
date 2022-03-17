@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import com.ebookfrenzy.myapplication.databinding.FragmentEuroBinding;
 
+import java.util.Locale;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link EuroFragment#newInstance} factory method to
@@ -19,6 +21,7 @@ import com.ebookfrenzy.myapplication.databinding.FragmentEuroBinding;
 public class EuroFragment extends Fragment {
 
     private FragmentEuroBinding binding;
+    private ConversionViewModel cViewModel;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -63,6 +66,11 @@ public class EuroFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // set euroText with value from view model, which comes from dollar fragment
+        binding.euroText.setText(String.format(Locale.ENGLISH,"%.2f",
+                cViewModel.getResult()));
+
         // Inflate the layout for this fragment
         binding = FragmentEuroBinding.inflate(inflater, container, false);
         return binding.getRoot();

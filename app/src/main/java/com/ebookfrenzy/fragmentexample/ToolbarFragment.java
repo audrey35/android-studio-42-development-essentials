@@ -1,12 +1,15 @@
 package com.ebookfrenzy.fragmentexample;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SeekBar;
 
 import com.ebookfrenzy.fragmentexample.databinding.FragmentToolbarBinding;
 
@@ -15,9 +18,26 @@ import com.ebookfrenzy.fragmentexample.databinding.FragmentToolbarBinding;
  * Use the {@link ToolbarFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ToolbarFragment extends Fragment {
+public class ToolbarFragment extends Fragment implements SeekBar.OnSeekBarChangeListener {
 
+    private static int seekvalue = 10;
     private FragmentToolbarBinding binding;
+    ToolbarListener activityCallback;
+
+    public interface ToolbarListener {
+        public void onButtonClick(int position, String text);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            activityCallback = (ToolbarListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement ToolbarListener");
+        }
+    }
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -67,8 +87,38 @@ public class ToolbarFragment extends Fragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding.seekBar1.setOnSeekBarChangeListener(this);
+        binding.button1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                buttonClicked(v);
+            }
+        });
+    }
+
+    private void buttonClicked(View v) {
+        activityCallback.onButtonClick(seekvalue, binding.editText1.getText().toString());
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        seekvalue = progress;
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar arg0) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar arg0) {
+
     }
 }

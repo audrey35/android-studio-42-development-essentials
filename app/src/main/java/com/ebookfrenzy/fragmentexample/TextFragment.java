@@ -2,6 +2,7 @@ package com.ebookfrenzy.fragmentexample;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -59,8 +60,13 @@ public class TextFragment extends Fragment {
         }
     }
 
+    public void changeTextProperties(int fontsize, String text) {
+        binding.textView2.setTextSize(fontsize);
+        binding.textView2.setText(text);
+    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentTextBinding.inflate(inflater, container, false);

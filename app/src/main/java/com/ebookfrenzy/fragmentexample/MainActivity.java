@@ -17,11 +17,15 @@ public class MainActivity extends FragmentActivity implements ToolbarFragment.To
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
-        setContentView(R.layout.activity_main);
+        setContentView(view);
     }
 
     @Override
     public void onButtonClick(int fontsize, String text) {
+        TextFragment textFragment = (TextFragment) getSupportFragmentManager().findFragmentById(R.id.text_fragment);
 
+        if (textFragment != null) {
+            textFragment.changeTextProperties(fontsize, text);
+        }
     }
 }

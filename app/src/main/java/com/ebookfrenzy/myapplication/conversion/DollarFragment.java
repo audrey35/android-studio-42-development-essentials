@@ -4,12 +4,15 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ebookfrenzy.myapplication.databinding.FragmentDollarBinding;
+
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +22,7 @@ import com.ebookfrenzy.myapplication.databinding.FragmentDollarBinding;
 public class DollarFragment extends Fragment {
 
     private FragmentDollarBinding binding;
+    private ConversionViewModel cViewModel;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -63,6 +67,21 @@ public class DollarFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // get reference to the MainViewModel instance
+        cViewModel = new ViewModelProvider(this).get(ConversionViewModel.class);
+
+        // setting the onClickListener for the convertButton
+        binding.convertButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                // set ViewModel's dollarText amount with current value in dollarText view
+                cViewModel.setAmount(String.format(Locale.ENGLISH,"%s",
+                        binding.dollarText.getText()));
+            }
+        });
+
         // Inflate the layout for this fragment
         binding = FragmentDollarBinding.inflate(inflater, container, false);
         return binding.getRoot();

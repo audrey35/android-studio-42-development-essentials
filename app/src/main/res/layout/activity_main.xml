@@ -8,7 +8,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/dollar_fragment"
-        android:name="com.ebookfrenzy.myapplication.DollarFragment"
+        android:name="com.ebookfrenzy.myapplication.conversion.DollarFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
@@ -18,7 +18,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/euro_fragment"
-        android:name="com.ebookfrenzy.myapplication.EuroFragment"
+        android:name="com.ebookfrenzy.myapplication.conversion.EuroFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"

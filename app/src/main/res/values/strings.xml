@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Room Demo</string>
+    <string name="product_id">Product ID</string>
+    <string name="not_assigned">Not assigned</string>
+    <string name="product_quantity">Product Quantity</string>
+    <string name="product_name">Product Name</string>
 </resources>

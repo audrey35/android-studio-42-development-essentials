@@ -1,5 +1,6 @@
 package com.ebookfrenzy.viewmodeldemo.ui.main;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -50,9 +51,20 @@ public class MainFragment extends Fragment {
         // get reference to ViewModel
         mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
-        // set resultText to converted value from ViewModel
-        binding.resultText.setText(String.format(Locale.ENGLISH,"%.2f",
-                mViewModel.getResult()));
+        // replace set resultText, handled by resultObserver's onChanged method
+        // new observer instance
+        final Observer<Float> resultObserver = new Observer<Float>() {
+
+            // observing data change
+            @Override
+            public void onChanged(@Nullable final Float result) {
+                binding.resultText.setText(String.format(Locale.ENGLISH,
+                        "%.2f", result));
+            }
+        };
+
+        // start observing for changes in result variable of the ViewModel
+        mViewModel.getResult().observe(getViewLifecycleOwner(), resultObserver);
 
         // called when user clicks convertButton
         binding.convertButton.setOnClickListener(new View.OnClickListener()
@@ -66,9 +78,8 @@ public class MainFragment extends Fragment {
                     mViewModel.setAmount(String.format(Locale.ENGLISH,"%s",
                             binding.dollarText.getText()));
 
-                    // set resultText view with converted value returned by ViewModel's getResult method
-                    binding.resultText.setText(String.format(Locale.ENGLISH,"%.2f",
-                            mViewModel.getResult()));
+                    // deleted line for setting resultText with updated value,
+                    // because this is handled by resultObserver's onChange method
                 } else {
                     // if dollarText is empty, display No value on resultText view
                     binding.resultText.setText("No Value");

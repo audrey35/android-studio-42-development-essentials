@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ebookfrenzy.roomdemo.Product;
 import com.ebookfrenzy.roomdemo.R;
 import com.ebookfrenzy.roomdemo.databinding.MainFragmentBinding;
 
@@ -47,6 +48,46 @@ public class MainFragment extends Fragment {
         listenerSetup();
         observerSetup();
         recyclerSetup();
+    }
+
+    private void listenerSetup() {
+
+        // runs basic validation to ensure that user entered
+        // a product name and a quantity
+        // uses given data to create a new product entity object
+        // ViewModel.insertProduct is called and passed the product object
+        // before the fields are cleared
+        binding.addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String name = binding.productName.getText().toString();
+                String quantity = binding.productQuantity.getText().toString();
+
+                if (!name.equals("") && !quantity.equals("")) {
+                    Product product = new Product(name, Integer.parseInt(quantity));
+                    mViewModel.insertProduct(product);
+                    clearFields();
+                } else {
+                    binding.productID.setText(R.string.incomplete);
+                }
+            }
+        });
+
+        binding.findButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.findProduct(binding.productName.getText().toString());
+            }
+        });
+
+        binding.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.deleteProduct(binding.productName.getText().toString());
+                clearFields();
+            }
+        });
     }
 
     private void clearFields() {

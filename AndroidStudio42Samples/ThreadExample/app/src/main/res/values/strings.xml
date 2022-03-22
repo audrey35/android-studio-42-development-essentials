@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ThreadExample</string>
+    <string name="press_me">Press Me</string>
+    <string name="status">Status</string>
+</resources>

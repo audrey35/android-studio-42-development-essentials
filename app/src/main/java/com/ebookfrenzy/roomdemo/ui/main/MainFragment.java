@@ -13,10 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ebookfrenzy.roomdemo.R;
+import com.ebookfrenzy.roomdemo.databinding.MainFragmentBinding;
 
 public class MainFragment extends Fragment {
 
     private MainViewModel mViewModel;
+    private MainFragmentBinding binding;
+    private ProductListAdapter adapter;
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -26,14 +29,30 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.main_fragment, container, false);
+        binding = MainFragmentBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        // TODO: Use the ViewModel
+
+        listenerSetup();
+        observerSetup();
+        recyclerSetup();
+    }
+
+    private void clearFields() {
+        binding.productID.setText("");
+        binding.productName.setText("");
+        binding.productQuantity.setText("");
     }
 
 }

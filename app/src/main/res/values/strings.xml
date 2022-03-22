@@ -7,4 +7,5 @@
     <string name="add">Add</string>
     <string name="delete">Delete</string>
     <string name="find">Find</string>
+    <string name="incomplete">Incomplete information</string>
 </resources>

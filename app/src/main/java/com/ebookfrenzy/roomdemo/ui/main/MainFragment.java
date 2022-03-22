@@ -1,5 +1,6 @@
 package com.ebookfrenzy.roomdemo.ui.main;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -15,6 +16,9 @@ import android.view.ViewGroup;
 import com.ebookfrenzy.roomdemo.Product;
 import com.ebookfrenzy.roomdemo.R;
 import com.ebookfrenzy.roomdemo.databinding.MainFragmentBinding;
+
+import java.util.List;
+import java.util.Locale;
 
 public class MainFragment extends Fragment {
 
@@ -88,6 +92,39 @@ public class MainFragment extends Fragment {
                 clearFields();
             }
         });
+    }
+
+    private void observerSetup() {
+
+        // "all products" observer passes the current list of products
+        // to the RecyclerAdapter.setProductList where the displayed list
+        // list will be updated
+        mViewModel.getAllProducts().observe(getViewLifecycleOwner(),
+                new Observer<List<Product>>() {
+                    @Override
+                    public void onChanged(@Nullable final List<Product> products) {
+                        adapter.setProductList(products);
+                    }
+                });
+
+        // "search results" observer
+        mViewModel.getSearchResults().observe(getViewLifecycleOwner(),
+                new Observer<List<Product>>() {
+                    @Override
+                    public void onChanged(@Nullable final List<Product> products) {
+
+                        if (products.size() > 0) {
+                            binding.productID.setText(String.format(Locale.US, "%d",
+                                    products.get(0).getId()));
+                            binding.productName.setText(products.get(0).getName());
+                            binding.productQuantity.setText(String.format(
+                                    Locale.US, "%d",
+                                    products.get(0).getQuantity()));
+                        } else {
+                            binding.productID.setText(R.string.no_match);
+                        }
+                    }
+                });
     }
 
     private void clearFields() {

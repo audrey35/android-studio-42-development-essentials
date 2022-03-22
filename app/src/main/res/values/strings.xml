@@ -8,4 +8,5 @@
     <string name="delete">Delete</string>
     <string name="find">Find</string>
     <string name="incomplete">Incomplete information</string>
+    <string name="no_match">No Match</string>
 </resources>

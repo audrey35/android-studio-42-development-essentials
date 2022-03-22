@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -125,6 +126,12 @@ public class MainFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    private void recyclerSetup() {
+        adapter = new ProductListAdapter(R.layout.product_list_item);
+        binding.productRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.productRecycler.setAdapter(adapter);
     }
 
     private void clearFields() {
